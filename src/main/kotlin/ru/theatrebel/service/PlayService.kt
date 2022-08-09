@@ -51,4 +51,6 @@ class PlayService(private val playRepository: PlayRepository,
         val play = playRepository.getReferenceById(id)
         return playRepository.save(play.update(playDto))
     }
+
+    fun deletePlay(id: Long) = playRepository.deleteById(id)
 }
