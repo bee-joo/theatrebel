@@ -9,6 +9,7 @@ import javax.persistence.*
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 class Review(
+    @Column(name = "play_id")
     var playId: Long,
 
     @Column(length = 2000, nullable = false)
