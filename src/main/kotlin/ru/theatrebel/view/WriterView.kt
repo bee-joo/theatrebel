@@ -3,7 +3,7 @@ package ru.theatrebel.view
 import com.fasterxml.jackson.annotation.JsonInclude
 import ru.theatrebel.entity.Play
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 data class WriterView(
     val id: Long,
     val name: String,
