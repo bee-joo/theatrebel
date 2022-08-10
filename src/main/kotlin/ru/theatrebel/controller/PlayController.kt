@@ -18,6 +18,9 @@ class PlayController(private val playService: PlayService) {
     @GetMapping("/{id}")
     fun getPlay(@PathVariable id: Long) = playService.getPlay(id)
 
+    @GetMapping("/{id}/writers")
+    fun getPlayWriters(@PathVariable id: Long) = playService.getWriters(id)
+
     @PostMapping
     fun postPlayThree(@RequestBody playDto: PlayDto) = playService.addPlay(playDto)
 
