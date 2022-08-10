@@ -1,15 +1,16 @@
 package ru.theatrebel.dto
 
 import ru.theatrebel.entity.Writer
+import ru.theatrebel.exception.ValidateNullException
 
 data class WriterDto(
-    val name: String,
+    val name: String? = null,
     val country: String? = null,
     val city: String? = null
-) : Dto
+)
 
 fun WriterDto.toEntity(): Writer {
-    val writer = Writer(this.name)
+    val writer = Writer(this.name ?: throw ValidateNullException("Name is required"))
     this.country?.let { writer.country = it }
     this.city?.let { writer.country = it }
 
