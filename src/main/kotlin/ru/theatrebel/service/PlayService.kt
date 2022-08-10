@@ -1,5 +1,6 @@
 package ru.theatrebel.service
 
+import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
@@ -30,7 +31,7 @@ class PlayService(private val playRepository: PlayRepository,
             playDto.writerIds.map { PlayWriterRelation(play.id!!, it) }
         )
 
-        return ResponseEntity(play, HttpStatus.OK)
+        return ResponseEntity.ok(play)
     }
 
     fun getPlay(id: Long): ResponseEntity<PlayView> {
@@ -47,10 +48,21 @@ class PlayService(private val playRepository: PlayRepository,
         return ResponseEntity(HttpStatus.NOT_FOUND)
     }
 
-    fun editPlay(id: Long, playDto: PlayDto): Play {
-        val play = playRepository.getReferenceById(id)
-        return playRepository.save(play.update(playDto))
+    fun editPlay(id: Long, playDto: PlayDto): ResponseEntity<Play> {
+        val play = try {
+            playRepository.getReferenceById(id)
+        } catch (e: EmptyResultDataAccessException) {
+            return ResponseEntity(HttpStatus.BAD_REQUEST)
+        }
+        return ResponseEntity(playRepository.save(play.update(playDto)), HttpStatus.OK)
     }
 
-    fun deletePlay(id: Long) = playRepository.deleteById(id)
+    fun deletePlay(id: Long): ResponseEntity<Play> {
+        try {
+            playRepository.deleteById(id)
+        } catch (e: EmptyResultDataAccessException) {
+            return ResponseEntity(HttpStatus.BAD_REQUEST)
+        }
+        return ResponseEntity(HttpStatus.OK)
+    }
 }
