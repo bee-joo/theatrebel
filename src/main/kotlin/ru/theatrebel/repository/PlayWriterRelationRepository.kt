@@ -2,14 +2,16 @@ package ru.theatrebel.repository
 
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
+import ru.theatrebel.entity.Play
 import ru.theatrebel.entity.PlayWriterRelation
+import ru.theatrebel.entity.Writer
 import java.util.UUID
 
 interface PlayWriterRelationRepository : CrudRepository<PlayWriterRelation, UUID> {
 
-    @Query(value = "SELECT pw FROM PlayWriterRelation pw WHERE pw.playId = ?1")
-    fun getAllByPlayId(id: Long): Set<PlayWriterRelation>
+    @Query(value = "SELECT w FROM Writer w, PlayWriterRelation pw WHERE pw.playId = ?1 AND w.id = pw.writerId")
+    fun getAllByPlayId(id: Long): List<Writer>
 
-    @Query(value = "SELECT pw FROM PlayWriterRelation pw WHERE pw.writerId = ?1")
-    fun getAllByWriterId(id: Long): Set<PlayWriterRelation>
+    @Query(value = "SELECT p from Play p, PlayWriterRelation pw WHERE pw.writerId = ?1 AND p.id = pw.playId")
+    fun getAllByWriterId(id: Long): List<Play>
 }
