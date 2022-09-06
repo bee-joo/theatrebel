@@ -1,5 +1,6 @@
 package ru.theatrebel.controller
 
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import ru.theatrebel.dto.PlayDto
+import ru.theatrebel.dto.ReviewDto
 import ru.theatrebel.service.PlayService
 
 @RestController
@@ -16,13 +18,16 @@ import ru.theatrebel.service.PlayService
 class PlayController(private val playService: PlayService) {
 
     @GetMapping("/{id}")
-    fun getPlay(@PathVariable id: Long) = playService.getPlay(id)
+    fun getPlay(@PathVariable id: Long) = ResponseEntity.ok().body(playService.getPlay(id))
 
     @GetMapping("/{id}/writers")
-    fun getPlayWriters(@PathVariable id: Long) = playService.getWriters(id)
+    fun getPlayWriters(@PathVariable id: Long) = ResponseEntity.ok().body(playService.getWriters(id))
 
     @PostMapping
-    fun postPlayThree(@RequestBody playDto: PlayDto) = playService.addPlay(playDto)
+    fun postPlay(@RequestBody playDto: PlayDto) = playService.addPlay(playDto)
+
+    @PostMapping("/{id}/reviews")
+    fun postReview(@PathVariable id: Long, @RequestBody reviewDto: ReviewDto) = playService.addReview(id, reviewDto)
 
     @PatchMapping("/{id}")
     fun patchPlay(@PathVariable id: Long, @RequestBody playDto: PlayDto) = playService.editPlay(id, playDto)
