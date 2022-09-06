@@ -2,6 +2,7 @@ package ru.theatrebel.entity
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
+import ru.theatrebel.dto.ReviewDto
 import javax.persistence.*
 
 @Entity
@@ -20,3 +21,9 @@ class Review(
     @Column(nullable = false)
     var id: Long? = null
 )
+
+fun Review.update(reviewDto: ReviewDto): Review {
+    reviewDto.text?.let { this.text = it }
+
+    return this
+}
