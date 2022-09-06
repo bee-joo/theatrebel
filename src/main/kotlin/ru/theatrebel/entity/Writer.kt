@@ -2,6 +2,7 @@ package ru.theatrebel.entity
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
+import ru.theatrebel.dto.WriterDto
 import ru.theatrebel.view.WriterView
 import javax.persistence.*
 
@@ -29,4 +30,12 @@ fun Writer.toView(): WriterView {
     this.city?.let { writerView.city = it }
 
     return writerView
+}
+
+fun Writer.update(writerDto: WriterDto): Writer {
+    writerDto.name?.let { this.name = it }
+    writerDto.country?.let { this.country = it }
+    writerDto.city?.let { this.city = it }
+
+    return this
 }
