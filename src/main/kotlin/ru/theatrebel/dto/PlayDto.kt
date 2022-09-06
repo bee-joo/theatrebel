@@ -1,7 +1,7 @@
 package ru.theatrebel.dto
 
 import ru.theatrebel.entity.Play
-import ru.theatrebel.exception.ValidateNullException
+import ru.theatrebel.exception.ValidationException
 
 data class PlayDto(
     val name: String? = null,
@@ -12,7 +12,7 @@ data class PlayDto(
 )
 
 fun PlayDto.toEntity(): Play {
-    val play = Play(this.name ?: throw ValidateNullException("Name excepted"))
+    val play = Play(this.name ?: throw ValidationException("Name excepted"))
     this.origname?.let { play.origname = it }
     this.date?.let { play.date = it }
     this.description?.let { play.description = it }
