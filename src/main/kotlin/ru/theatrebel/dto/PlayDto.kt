@@ -5,7 +5,7 @@ import ru.theatrebel.exception.ValidationException
 
 data class PlayDto(
     val name: String? = null,
-    val writerIds: Set<Long>? = null,
+    val writerIds: List<Long>? = null,
     val origname: String? = null,
     val date: Int? = null,
     val description: String? = null
