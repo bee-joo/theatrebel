@@ -1,6 +1,7 @@
 package ru.theatrebel.service.impl
 
 import org.springframework.dao.EmptyResultDataAccessException
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import ru.theatrebel.dto.PlayDto
 import ru.theatrebel.dto.ReviewDto
@@ -14,6 +15,7 @@ import ru.theatrebel.repository.ReviewRepository
 import ru.theatrebel.repository.WriterRepository
 import ru.theatrebel.service.PlayService
 import ru.theatrebel.view.PlayView
+import ru.theatrebel.view.ResponseObject
 import ru.theatrebel.view.WriterView
 
 @Service
@@ -24,7 +26,7 @@ class PlayServiceImpl(private val playRepository: PlayRepository,
 
     override fun addPlay(playDto: PlayDto): Play {
         if (playDto.writerIds == null || !playDto.writerIds.all { writerRepository.existsById(it) }) {
-            throw ValidationException("No writers found")
+            throw ValidationException("Invalid writers")
         }
 
         val play = try {
@@ -42,13 +44,15 @@ class PlayServiceImpl(private val playRepository: PlayRepository,
 
     override fun getPlay(id: Long): PlayView {
         val play = playRepository.findById(id).orElseThrow { NotFoundException("Play with $id not found") }
+        return play.toView(
+            playWriterRelationRepository.getAllWritersByPlayId(id),
+            reviewRepository.findAllByPlayId(id)
+        )
+    }
 
-        val playView = play.toView()
-        val writerList = playWriterRelationRepository.getAllByPlayId(id)
-
-        playView.writers.addAll(writerList)
-
-        return playView
+    override fun getAllPlays(): List<PlayView> {
+        return playRepository.findAll()
+            .map { play -> play.toView(playWriterRelationRepository.getAllWritersByPlayId(play.id!!)) }
     }
 
     override fun getWriters(id: Long): List<WriterView> {
@@ -56,22 +60,19 @@ class PlayServiceImpl(private val playRepository: PlayRepository,
             throw NotFoundException("Play with id $id doesn't exist!")
         }
 
-        return playWriterRelationRepository.getAllByPlayId(id).map { it.toView()}
+        return playWriterRelationRepository.getAllWritersByPlayId(id).map { it.toView()}
     }
 
     override fun editPlay(id: Long, playDto: PlayDto): Play {
-        val play = try {
-            playRepository.getReferenceById(id)
-        } catch (e: EmptyResultDataAccessException) {
-            throw e
-        }
+        val play = playRepository.findById(id).orElseThrow { throw NotFoundException("Play with id $id doesn't exist!") }
 
         return playRepository.save(play.update(playDto))
     }
 
-    override fun deletePlay(id: Long) {
+    override fun deletePlay(id: Long): ResponseObject<String> {
         try {
             playRepository.deleteById(id)
+            return ResponseObject(HttpStatus.OK.value(), "Deleted")
         } catch (e: EmptyResultDataAccessException) {
             throw e
         }
@@ -86,6 +87,16 @@ class PlayServiceImpl(private val playRepository: PlayRepository,
             throw ValidationException("No play found")
         }
 
-        return reviewRepository.save(reviewDto.toEntity())
+        return try {
+            reviewRepository.save(reviewDto.toEntity())
+        } catch (e: ValidationException) {
+            throw e
+        }
+    }
+
+    override fun getReviews(id: Long): List<Review> {
+        if (!playRepository.existsById(id)) throw NotFoundException("Play with id $id doesn't exist!")
+
+        return reviewRepository.findAllByPlayId(id)
     }
 }
