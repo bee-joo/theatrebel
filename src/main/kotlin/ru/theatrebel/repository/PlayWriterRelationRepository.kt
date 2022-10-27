@@ -5,13 +5,13 @@ import org.springframework.data.repository.CrudRepository
 import ru.theatrebel.entity.Play
 import ru.theatrebel.entity.PlayWriterRelation
 import ru.theatrebel.entity.Writer
-import java.util.UUID
+import java.util.*
 
 interface PlayWriterRelationRepository : CrudRepository<PlayWriterRelation, UUID> {
 
     @Query(value = "SELECT w FROM Writer w, PlayWriterRelation pw WHERE pw.playId = ?1 AND w.id = pw.writerId")
-    fun getAllByPlayId(id: Long): List<Writer>
+    fun getAllWritersByPlayId(playId: Long): List<Writer>
 
     @Query(value = "SELECT p from Play p, PlayWriterRelation pw WHERE pw.writerId = ?1 AND p.id = pw.playId")
-    fun getAllByWriterId(id: Long): List<Play>
+    fun getAllPlaysByWriterId(writerId: Long): List<Play>
 }
