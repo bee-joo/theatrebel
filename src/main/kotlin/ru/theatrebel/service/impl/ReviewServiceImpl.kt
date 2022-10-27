@@ -1,6 +1,7 @@
 package ru.theatrebel.service.impl
 
 import org.springframework.dao.EmptyResultDataAccessException
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import ru.theatrebel.dto.ReviewDto
 import ru.theatrebel.dto.toEntity
@@ -11,6 +12,7 @@ import ru.theatrebel.exception.ValidationException
 import ru.theatrebel.repository.PlayRepository
 import ru.theatrebel.repository.ReviewRepository
 import ru.theatrebel.service.ReviewService
+import ru.theatrebel.view.ResponseObject
 
 @Service
 class ReviewServiceImpl(private val reviewRepository: ReviewRepository,
@@ -26,12 +28,17 @@ class ReviewServiceImpl(private val reviewRepository: ReviewRepository,
             throw ValidationException("No play found")
         }
 
-        return reviewRepository.save(reviewDto.toEntity())
+        return try {
+            reviewRepository.save(reviewDto.toEntity())
+        } catch (e: ValidationException) {
+            throw e
+        }
     }
 
-    override fun deleteReview(id: Long) {
+    override fun deleteReview(id: Long): ResponseObject<String> {
         try {
             reviewRepository.deleteById(id)
+            return ResponseObject(HttpStatus.OK.value(), "Deleted")
         } catch (e: EmptyResultDataAccessException) {
             throw e
         }
