@@ -26,12 +26,22 @@ class Play(
     var id: Long? = null
 )
 
-fun Play.toView(): PlayView {
+fun Play.toView(
+    writers: List<Writer> = emptyList(),
+    reviews: List<Review> = emptyList()
+): PlayView {
     val playView = PlayView(this.id!!, this.name)
 
     this.origname?.let { playView.origname = it }
     this.date?.let { playView.date = it }
     this.description?.let { playView.description = it }
+
+    if (writers.isNotEmpty()) {
+        playView.writers = writers.map { writer -> writer.toView() }
+    }
+    if (reviews.isNotEmpty()) {
+        playView.reviews = reviews
+    }
 
     return playView
 }

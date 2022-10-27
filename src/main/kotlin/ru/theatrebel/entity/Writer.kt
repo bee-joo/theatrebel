@@ -23,11 +23,14 @@ class Writer(
     var id: Long? = null
 )
 
-fun Writer.toView(): WriterView {
+fun Writer.toView(plays: List<Play> = emptyList()): WriterView {
     val writerView = WriterView(this.id!!, this.name)
 
     this.country?.let { writerView.country = it }
     this.city?.let { writerView.city = it }
+    if (plays.isNotEmpty()) {
+        writerView.plays = plays.map { it.toView() }
+    }
 
     return writerView
 }
