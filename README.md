@@ -1,5 +1,6 @@
 # Theatrebel project
-Service for storing theatre plays info and adding reviews
+Service for storing theatre plays info and adding reviews  
+[API Docs](http://45.136.245.120:3000/api-docs/)
 
 ## Stack
 - Kotlin
