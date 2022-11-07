@@ -1,23 +1,20 @@
 # Theatrebel project
-Проект сервиса для хранения информации о пьесах, а также для добавления отзывов к ним
+Service for storing theatre plays info and adding reviews  
+[API Docs](http://45.136.245.120:3000/api-docs/)
 
-## Технологии
-- Kotlin: язык программирования
-- Spring Boot: фреймворк
-- Spring Data JPA + PostgreSQL: база данных и доступ к ней
-- Liquibase: система контроля миграций базы данных
-- Gradle: система сборки
+## Stack
+- Kotlin
+- Spring Boot - web framework, DI, IoC
+- Spring Data JPA - data access
+- PostgreSQL - database
+- Liquibase - migrations control system
+- Gradle - build system
 
-## Что реализовано
-- Миграции базы данных
-- CRUD операции
-- Добавление информации о авторах и пьесах
-- Добавление отзывов
-- Попытка решения проблемы N+1 запросов при использовании Hibernate и связи Many-To-Many путём использования сущности для промежуточной таблицы
-
-## TODO
-- Авторизация/аутентификация
-- Больше информации в сущностях
-- Добавление отзывов с критериями
-- Валидация данных
-- ...
+## Features
+- DB migrations
+- CRUD operations, DTO-views mapping
+- Adding info about plays and writers
+- Adding reviews
+- Try to solve N+1 problem using Hibernate and Many-To-Many relation (use additional entity for joining table)
+  
+[README (RU)](https://github.com/bee-joo/theatrebel/blob/master/README-RU.md)
