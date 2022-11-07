@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="update-primary-key" author="bee_joo">
+        <dropPrimaryKey tableName="plays_writers"/>
+        <dropColumn tableName="plays_writers" columnName="uuid"/>
+
+        <addPrimaryKey
+                tableName="plays_writers"
+                columnNames="play_id, writer_id"
+                constraintName="pk_plays_writers"
+        />
+    </changeSet>
+
+</databaseChangeLog>
