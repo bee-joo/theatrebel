@@ -9,14 +9,14 @@ import javax.persistence.*
 class PlayWriterRelation(
     @Id
     @Column(name = "play_id")
-    var playId: Long,
+    var playId: Long = 0,
 
     @Id
     @Column(name = "writer_id")
-    var writerId: Long
+    var writerId: Long = 0
 )
 
 class PlayWriterKey(
-    var playId: Long,
-    var writerId: Long
+    var playId: Long = 0,
+    var writerId: Long = 0
 ) : Serializable
