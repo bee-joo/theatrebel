@@ -3,7 +3,8 @@ package ru.theatrebel.entity
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import ru.theatrebel.dto.WriterDto
-import ru.theatrebel.view.WriterView
+import ru.theatrebel.dto.view.WriterView
+import ru.theatrebel.mapper.*
 import javax.persistence.*
 
 @Entity

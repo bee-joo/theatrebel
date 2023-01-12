@@ -1,6 +1,9 @@
 package ru.theatrebel.service.impl
 
 import org.springframework.dao.EmptyResultDataAccessException
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import ru.theatrebel.dto.WriterDto
@@ -10,13 +13,14 @@ import ru.theatrebel.entity.toView
 import ru.theatrebel.entity.update
 import ru.theatrebel.exception.NotFoundException
 import ru.theatrebel.exception.ValidationException
+import ru.theatrebel.mapper.*
 import ru.theatrebel.repository.PlayRepository
 import ru.theatrebel.repository.PlayWriterRelationRepository
 import ru.theatrebel.repository.WriterRepository
 import ru.theatrebel.service.WriterService
-import ru.theatrebel.view.PlayView
-import ru.theatrebel.view.ResponseObject
-import ru.theatrebel.view.WriterView
+import ru.theatrebel.dto.view.PlayView
+import ru.theatrebel.dto.view.ResponseObject
+import ru.theatrebel.dto.view.WriterView
 
 @Service
 class WriterServiceImpl(private val writerRepository: WriterRepository,
@@ -31,9 +35,9 @@ class WriterServiceImpl(private val writerRepository: WriterRepository,
         }
     }
 
-    override fun getAllWriters(): List<WriterView> {
+    override fun getAllWriters(orderBy: String, page: String, count: String): Page<WriterView> {
         return writerRepository
-                .findAll()
+                .findAll(PageRequest.of(page.toInt(), count.toInt(), Sort.by(orderBy)))
                 .map { writer -> writer.toView() }
     }
 

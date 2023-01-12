@@ -2,7 +2,7 @@ package ru.theatrebel.service
 
 import ru.theatrebel.dto.ReviewDto
 import ru.theatrebel.entity.Review
-import ru.theatrebel.view.ResponseObject
+import ru.theatrebel.dto.view.ResponseObject
 
 interface ReviewService {
     fun getReview(id: Long): Review

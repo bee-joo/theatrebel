@@ -12,7 +12,7 @@ import ru.theatrebel.exception.ValidationException
 import ru.theatrebel.repository.PlayRepository
 import ru.theatrebel.repository.ReviewRepository
 import ru.theatrebel.service.ReviewService
-import ru.theatrebel.view.ResponseObject
+import ru.theatrebel.dto.view.ResponseObject
 
 @Service
 class ReviewServiceImpl(private val reviewRepository: ReviewRepository,

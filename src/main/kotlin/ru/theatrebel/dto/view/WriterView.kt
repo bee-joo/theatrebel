@@ -1,4 +1,4 @@
-package ru.theatrebel.view
+package ru.theatrebel.dto.view
 
 import com.fasterxml.jackson.annotation.JsonInclude
 
