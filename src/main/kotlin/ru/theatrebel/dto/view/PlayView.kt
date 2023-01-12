@@ -1,4 +1,4 @@
-package ru.theatrebel.view
+package ru.theatrebel.dto.view
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import ru.theatrebel.entity.Review
@@ -7,9 +7,12 @@ import ru.theatrebel.entity.Review
 data class PlayView(
     val id: Long,
     val name: String,
-    var writers: List<WriterView>? = null,
+    var writers: List<WriterView> = emptyList(),
     var origname: String? = null,
     var date: Int? = null,
     var description: String? = null,
-    var reviews: List<Review>? = null
+    var reviews: List<Review> = emptyList(),
+    var city: String? = null,
+    var text: String? = null,
+    var hasText: Boolean = false
 )
