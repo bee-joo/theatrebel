@@ -7,4 +7,5 @@
 
     <include file="db/changelog/2022/08/init-changelog.xml"/>
     <include file="db/changelog/2022/11/join-table-changelog.xml"/>
+    <include file="db/changelog/2022/12/add-play-columns-changelog.xml"/>
 </databaseChangeLog>
