@@ -1,8 +1,10 @@
 package ru.theatrebel.controller
 
+import org.springframework.data.domain.Page
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import ru.theatrebel.dto.WriterDto
+import ru.theatrebel.dto.view.WriterView
 import ru.theatrebel.service.WriterService
 
 @RestController
@@ -10,7 +12,11 @@ import ru.theatrebel.service.WriterService
 class WriterController(private val writerService: WriterService) {
 
     @GetMapping
-    fun getAllWriters() = writerService.getAllWriters()
+    fun getAllWriters(
+        @RequestParam(name = "orderBy", defaultValue = "name") orderBy: String,
+        @RequestParam(name = "page", defaultValue = "0") page: String,
+        @RequestParam(name = "count", defaultValue = "20") count: String
+    ): Page<WriterView> = writerService.getAllWriters(orderBy, page, count)
 
     @GetMapping("/{id}")
     fun getWriterById(@PathVariable id: Long) = writerService.getWriterById(id)
