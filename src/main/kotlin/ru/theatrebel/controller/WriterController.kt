@@ -9,6 +9,7 @@ import ru.theatrebel.service.WriterService
 
 @RestController
 @RequestMapping("/api/writers")
+@CrossOrigin
 class WriterController(private val writerService: WriterService) {
 
     @GetMapping

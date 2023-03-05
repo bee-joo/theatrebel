@@ -1,6 +1,7 @@
 package ru.theatrebel.dto.view
 
 import com.fasterxml.jackson.annotation.JsonInclude
+import lombok.Builder
 import ru.theatrebel.entity.Review
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)

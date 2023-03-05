@@ -13,7 +13,6 @@ import ru.theatrebel.entity.toView
 import ru.theatrebel.entity.update
 import ru.theatrebel.exception.NotFoundException
 import ru.theatrebel.exception.ValidationException
-import ru.theatrebel.mapper.*
 import ru.theatrebel.repository.PlayRepository
 import ru.theatrebel.repository.PlayWriterRelationRepository
 import ru.theatrebel.repository.WriterRepository
@@ -21,6 +20,7 @@ import ru.theatrebel.service.WriterService
 import ru.theatrebel.dto.view.PlayView
 import ru.theatrebel.dto.view.ResponseObject
 import ru.theatrebel.dto.view.WriterView
+import ru.theatrebel.entity.toEntity
 
 @Service
 class WriterServiceImpl(private val writerRepository: WriterRepository,

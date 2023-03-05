@@ -15,7 +15,6 @@ import ru.theatrebel.dto.toEntity
 import ru.theatrebel.entity.*
 import ru.theatrebel.exception.NotFoundException
 import ru.theatrebel.exception.ValidationException
-import ru.theatrebel.mapper.*
 import ru.theatrebel.repository.PlayRepository
 import ru.theatrebel.repository.PlayWriterRelationRepository
 import ru.theatrebel.repository.ReviewRepository
@@ -32,7 +31,7 @@ class PlayServiceImpl(private val playRepository: PlayRepository,
                       private val reviewRepository: ReviewRepository) : PlayService {
 
     override fun addPlay(playDto: PlayDto): Play {
-        if (playDto.writerIds == null || !playDto.writerIds.all { writerRepository.existsById(it) }) {
+        if (playDto.writerIds == null || !playDto.writerIds.all { id -> writerRepository.existsById(id) }) {
             throw ValidationException("Invalid writers")
         }
 
@@ -52,8 +51,8 @@ class PlayServiceImpl(private val playRepository: PlayRepository,
     override fun getPlay(id: Long): PlayView {
         val play = playRepository.findById(id).orElseThrow { NotFoundException("Play with $id not found") }
         return play.toView(
-            playWriterRelationRepository.getAllWritersByPlayId(id),
-            reviewRepository.findAllByPlayId(id)
+            writers = playWriterRelationRepository.getAllWritersByPlayId(id),
+            reviews = reviewRepository.findAllByPlayId(id)
         )
     }
 
@@ -82,7 +81,7 @@ class PlayServiceImpl(private val playRepository: PlayRepository,
 
         return playWriterRelationRepository
             .getAllWritersByPlayId(id, PageRequest.of(page.toInt(), count.toInt(), Sort.by(orderBy)))
-            .map { it.toView()}
+            .map { it.toView() }
     }
 
     override fun editPlay(id: Long, playDto: PlayDto): Play {
