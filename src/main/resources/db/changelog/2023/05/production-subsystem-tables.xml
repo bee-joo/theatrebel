@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+    <changeSet id="create-table-productions" author="bee-joo">
+        <createTable tableName="productions">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="play_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_production_play_id"
+                             references="plays(id)"/>
+            </column>
+            <column name="description" type="varchar(6000)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create-table-directors" author="bee-joo">
+        <createTable tableName="directors">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="info" type="varchar(6000)"/>
+            <column name="photo" type="varchar(2000)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create-table-actors" author="bee-joo">
+        <createTable tableName="actors">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="photo" type="varchar(2000)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create-table-theatres" author="bee-joo">
+        <createTable tableName="theatres">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" type="varchar(2000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="photo" type="varchar(2000)"/>
+            <column name="description" type="varchar(6000)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="add-productions-directors-relation" author="bee-joo">
+        <createTable tableName="productions_directors">
+            <column name="production_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_productions_directors_production_id"
+                             references="productions(id)"
+                             deleteCascade="true"/>
+            </column>
+            <column name="director_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_productions_directors_director_id"
+                             references="directors(id)"
+                             deleteCascade="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="add-productions-actors-relation" author="bee-joo">
+        <createTable tableName="productions_actors">
+            <column name="production_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_productions_actors_production_id"
+                             references="productions(id)"
+                             deleteCascade="true"/>
+            </column>
+            <column name="actor_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_productions_actors_actor_id"
+                             references="actors(id)"
+                             deleteCascade="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="add-productions-theatres-relation" author="bee-joo">
+        <createTable tableName="productions_theatres">
+            <column name="production_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_productions_theatres_production_id"
+                             references="productions(id)"
+                             deleteCascade="true"/>
+            </column>
+            <column name="theatre_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_productions_theatres_theatre_id"
+                             references="theatres(id)"
+                             deleteCascade="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

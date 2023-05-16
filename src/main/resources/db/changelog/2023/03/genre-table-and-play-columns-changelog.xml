@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="create-table-genres" author="bee_joo">
+        <createTable tableName="genres">
+            <column name="id" autoIncrement="true" type="int">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="update-play-table-1" author="bee_joo">
+        <addColumn tableName="plays">
+            <column name="genre_id" type="int">
+                <constraints nullable="true"
+                             foreignKeyName="fk_play_genre_id"
+                             references="genres(id)"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="plays">
+            <column name="image" type="varchar(1000)"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

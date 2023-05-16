@@ -5,8 +5,6 @@ plugins {
     id("org.springframework.boot") version "2.7.4"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("org.springdoc.openapi-gradle-plugin") version "1.6.0"
-    kotlin("plugin.lombok") version "1.8.0"
-    id("io.freefair.lombok") version "5.3.0"
     kotlin("jvm") version kotlinVersion
     kotlin("plugin.spring") version kotlinVersion
     kotlin("plugin.jpa") version kotlinVersion
@@ -19,8 +17,9 @@ kapt {
 }
 
 group = "ru"
-version = "0.0.2-SNAPSHOT"
+version = "0.0.6"
 java.sourceCompatibility = JavaVersion.VERSION_17
+val JJWT_VERSION = "0.11.5"
 
 repositories {
     mavenCentral()
@@ -29,15 +28,22 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.liquibase:liquibase-core")
     implementation("org.springdoc:springdoc-openapi-ui:1.6.13")
     implementation("org.springdoc:springdoc-openapi-kotlin:1.6.13")
-    // runtimeOnly("com.h2database:h2")
-    runtimeOnly("org.postgresql:postgresql")
+    implementation("io.jsonwebtoken:jjwt-api:$JJWT_VERSION")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:$JJWT_VERSION")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:$JJWT_VERSION")
+    testRuntimeOnly("com.h2database:h2")
+    implementation("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.security:spring-security-test")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.15.0")
+
 }
 
 allOpen {

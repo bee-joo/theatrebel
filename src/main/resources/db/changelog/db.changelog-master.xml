@@ -7,5 +7,10 @@
 
     <include file="db/changelog/2022/08/init-changelog.xml"/>
     <include file="db/changelog/2022/11/join-table-changelog.xml"/>
+    <include file="db/changelog/2022/12/add-default-value-changelog.xml"/>
     <include file="db/changelog/2022/12/add-play-columns-changelog.xml"/>
+    <include file="db/changelog/2023/03/genre-table-and-play-columns-changelog.xml"/>
+    <include file="db/changelog/2023/05/production-subsystem-tables.xml"/>
+    <include file="db/changelog/2023/05/add-column-role-to-actor-prod.xml"/>
+    <include file="db/changelog/2023/05/add-column-video.xml"/>
 </databaseChangeLog>
